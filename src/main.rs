@@ -4,7 +4,7 @@ use nvml_wrapper::enum_wrappers::device::TemperatureSensor;
 use nvml_wrapper::enums::device::UsedGpuMemory;
 use nvml_wrapper::struct_wrappers::device::ProcessInfo;
 use nvml_wrapper::NVML;
-use sysinfo::{ProcessExt, System, SystemExt};
+use sysinfo::{Pid, PidExt, ProcessExt, System, SystemExt};
 
 fn send_notification(name: &str, body: &str, icon: &str) {
     Notification::new()
@@ -56,7 +56,7 @@ fn get_target_process_info(gpu_info: GpuInfo, target_process: &str) -> SinglePro
 }
 
 fn get_process_name(sys: &sysinfo::System, pid: u32) -> String {
-    if let Some(process) = sys.process(pid as i32) {
+    if let Some(process) = sys.process(Pid::from_u32(pid)) {
         return process.name().to_string();
     }
     String::from("")
