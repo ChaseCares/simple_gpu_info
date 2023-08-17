@@ -23,7 +23,9 @@ Steps:
 Troubleshooting:
 
 Run `systemctl --user list-timers --all` to view all the current user timers
+
 Run `systemctl --user daemon-reload` to reload the systemd user daemon
+
 Run `journalctl -e --user` to view the systemd user logs
 
 ## Works Cited
