@@ -61,35 +61,8 @@ fn get_process_name(sys: &sysinfo::System, pid: u32) -> String {
     }
     String::from("")
 }
-#[derive(Debug, Clone)]
-struct GpuInfo {
-    name: String,
-    total_utilization: String,
-    memory_usage: (u64, u64),
-    temperature: u32,
-    graphics_processes: Vec<ProcessInfo>,
-}
 
-#[derive(Debug)]
-struct SingleProcessInfo {
-    name: String,
-    memory_usage: u64,
-}
-
-#[derive(Parser, Debug)]
-#[command(author, version, about, long_about = None)]
-struct Args {
-    #[arg(short, long)]
-    name: String,
-}
-
-fn main() {
-    let args = Args::parse();
-    let target_process = args.name;
-
-    let gpu_info = get_gpu_usage();
-    let target_process_info = get_target_process_info(gpu_info.clone(), target_process.as_str());
-
+fn print_info(gpu_info: GpuInfo, target_process_info: SingleProcessInfo) {
     println!(
         "Name: {:#?}\nTotal utilization: {:#?}\nMemory usage: {:#?}/{:#?} MB\nTemperature: {:#?}°C\n{} memory usage: {:#?} MB",
         gpu_info.name,
@@ -100,13 +73,58 @@ fn main() {
         target_process_info.name,
         target_process_info.memory_usage
     );
-    send_notification(
-        "GPU Usage",
-        format!(
-            "{} Is Utilizing {} MB of Memory",
-            target_process_info.name, target_process_info.memory_usage
-        )
-        .as_str(),
-        "dialog-information",
-    );
+}
+
+#[derive(Debug, Clone)]
+struct GpuInfo {
+    name: String,
+    total_utilization: String,
+    memory_usage: (u64, u64),
+    temperature: u32,
+    graphics_processes: Vec<ProcessInfo>,
+}
+
+#[derive(Debug, Clone)]
+struct SingleProcessInfo {
+    name: String,
+    memory_usage: u64,
+}
+
+/// Simple program to get the GPU usage of a process
+#[derive(Parser, Debug)]
+#[command(author, version, about, long_about = None)]
+struct Args {
+    /// Name of the a process
+    #[arg(short, long)]
+    name: String,
+
+    /// Print info about the GPU and the process
+    #[arg(short, long)]
+    print_info: bool,
+}
+
+fn main() {
+    let args: Args = Args::parse();
+
+    if !args.name.is_empty() {
+        let gpu_info: GpuInfo = get_gpu_usage();
+        let target_process_info: SingleProcessInfo =
+            get_target_process_info(gpu_info.clone(), args.name.as_str());
+
+        send_notification(
+            "GPU Usage",
+            format!(
+                "{} is utilizing {} MB of memory",
+                target_process_info.name, target_process_info.memory_usage
+            )
+            .as_str(),
+            "dialog-information",
+        );
+
+        if args.print_info {
+            print_info(gpu_info, target_process_info.clone());
+        }
+    } else {
+        println!("Please provide a process name");
+    }
 }
