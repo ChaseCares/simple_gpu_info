@@ -31,7 +31,11 @@ Run `journalctl -e --user` to view the systemd user logs
 ## Works Cited
 
 [nvml-wrapper for GPU info](https://github.com/Cldfire/nvml-wrapper)
+
 [Implementation of nvml-wrapper](https://github.com/BDHU/gpuinfo)
+
 [Notifications](https://github.com/hoodie/notify-rust)
+
 [Systemd User](https://wiki.archlinux.org/title/Systemd/User)
+
 [Systemd Timers](https://wiki.archlinux.org/title/Systemd/Timers)
