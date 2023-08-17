@@ -1,0 +1,8 @@
+[Unit]
+Description=Simple GPU Info
+
+[Service]
+ExecStart=<REPLACED WITH FULL PATH>simple_gpu_info --name=plasmashell
+
+[Install]
+WantedBy=default.target

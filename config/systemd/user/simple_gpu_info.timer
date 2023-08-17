@@ -1,0 +1,9 @@
+[Unit]
+Description=Run
+
+[Timer]
+OnActiveSec=60min
+OnUnitActiveSec=60min
+
+[Install]
+WantedBy=timers.target
