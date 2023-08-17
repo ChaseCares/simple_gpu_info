@@ -3,7 +3,7 @@ use notify_rust::Notification;
 use nvml_wrapper::enum_wrappers::device::TemperatureSensor;
 use nvml_wrapper::enums::device::UsedGpuMemory;
 use nvml_wrapper::struct_wrappers::device::ProcessInfo;
-use nvml_wrapper::NVML;
+use nvml_wrapper::Nvml;
 use sysinfo::{Pid, PidExt, ProcessExt, System, SystemExt};
 
 fn send_notification(name: &str, body: &str, icon: &str) {
@@ -16,14 +16,14 @@ fn send_notification(name: &str, body: &str, icon: &str) {
 }
 
 fn get_gpu_usage() -> GpuInfo {
-    let nvml = NVML::init().unwrap();
+    let nvml = Nvml::init().unwrap();
     let device = nvml.device_by_index(0).unwrap();
 
     let name = device.name().unwrap();
     let total_utilization = device.utilization_rates().unwrap();
     let memory_usage = device.memory_info().unwrap();
     let temperature = device.temperature(TemperatureSensor::Gpu).unwrap();
-    let graphics_processes: Vec<ProcessInfo> = device.running_graphics_processes().unwrap();
+    let graphics_processes: Vec<ProcessInfo> = device.running_graphics_processes_v2().unwrap();
 
     GpuInfo {
         name,
