@@ -2,10 +2,25 @@
 
 A simple tool to get information about GPU utilization, for Linux.
 
+![Example](./img/example.png)
+
 ## Usage
 
 ```sh
-simple_gpu_info --name=plasmashell
+$ simple_gpu_info --help
+Simple program to get the GPU usage of a process
+
+Usage: simple_gpu_info [OPTIONS] <--name <NAME>|--loging>
+
+Options:
+  -n, --name <NAME>            Name of the a process
+  -l, --loging                 Log the GPU usage
+  -p, --print-info             Print info about the GPU and the process
+  -d, --disable-notification   Disable the notification
+  -L, --log-path <LOG_PATH>    Path to the log file [default: /tmp/gpu-usage.log]
+  -d, --delimiter <DELIMITER>  Log delimiter [default: ", "]
+  -h, --help                   Print help
+  -V, --version                Print version
 ```
 
 ## Systemd Service and Timer
