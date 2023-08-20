@@ -6,7 +6,7 @@ A simple tool to get information about GPU utilization, for Linux.
 
 ## Usage
 
-```sh
+```console
 $ simple_gpu_info --help
 Simple program to get the GPU usage of a process
 
