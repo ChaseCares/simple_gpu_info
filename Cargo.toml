@@ -7,7 +7,7 @@ edition = "2021"
 
 [dependencies]
 chrono = "0.4.26"
-clap = { version = "4.3.21", features = ["derive"] }
-notify-rust = "4.8.0"
+clap = { version = "4.4.0", features = ["derive"] }
+notify-rust = "4.9.0"
 nvml-wrapper = { version = "0.9.0", features = ["legacy-functions"] }
 sysinfo = "0.29.8"
