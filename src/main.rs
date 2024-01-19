@@ -10,7 +10,7 @@ use std::{
     io::Write,
     path::Path,
 };
-use sysinfo::{Pid, PidExt, ProcessExt, System, SystemExt};
+use sysinfo::{Pid, System};
 
 fn capitalize(input: String) -> String {
     let mut chars = input.chars();
